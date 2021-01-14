@@ -45,7 +45,7 @@ function EmployeeDirectory() {
                 Image
             </th>
             <th>
-                <button type='button' onClick={() => setSortConfig('name')}>
+                <button type='button' onClick={() => requestSort('name')}>
                     Name
                 </button>
             </th>
@@ -53,12 +53,12 @@ function EmployeeDirectory() {
                 D.O.B
             </th>
             <th>
-                <button type='button' onClick={() => setSortConfig('phone')}>
+                <button type='button' onClick={() => requestSort('phone')}>
                     Phone
                 </button>
             </th>
             <th>
-                <button type='button' onClick={() => setSortConfig('email')}>
+                <button type='button' onClick={() => requestSort('email')}>
                     Email
                 </button>
             </th>
@@ -78,6 +78,14 @@ function EmployeeDirectory() {
       </table>
     );
   };
+
+  const requestSort = () => {
+      let direction = 'ascending';
+      if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+          direction === 'descending'
+      }
+      setSortConfig({key, direction});
+  }
 
   //   const employeeTable = (props) => {
   //       document.querySelector(".employees").innerHTML = "";
