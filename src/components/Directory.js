@@ -22,24 +22,43 @@ function EmployeeDirectory() {
 
   const employeeTable = (props) => {
     const { employees } = props;
-    let sortedEmployees = [...employees];
-    sortedEmployees.sort((a,b) => {
-        if (a.name < b.name) {
-            return -1;
-        }
-        if (a.name > b.name) {
-            return 1;
-        }
-        return 0;
-    });
+    const [sortedField, setSortedField] = useState(null);
+    // let sortedEmployees = [...employees];
+    // sortedEmployees.sort((a,b) => {
+    //     if (a.name < b.name) {
+    //         return -1;
+    //     }
+    //     if (a.name > b.name) {
+    //         return 1;
+    //     }
+    //     return 0;
+    // });
     return (
       <table>
         <caption>Employees</caption>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>In Stock</th>
+            <th>
+                Image
+            </th>
+            <th>
+                <button type='button' onClick={() => setSortedField('name')}>
+                    Name
+                </button>
+            </th>
+            <th>
+                D.O.B
+            </th>
+            <th>
+                <button type='button' onClick={() => setSortedField('phone')}>
+                    Phone
+                </button>
+            </th>
+            <th>
+                <button type='button' onClick={() => setSortedField('email')}>
+                    Email
+                </button>
+            </th>
           </tr>
         </thead>
         <tbody>
