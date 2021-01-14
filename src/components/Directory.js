@@ -22,18 +22,21 @@ function EmployeeDirectory() {
 
   const employeeTable = (props) => {
     const { employees } = props;
-    const [sortedField, setSortedField] = useState(null);
-    // let sortedEmployees = [...employees];
-    // sortedEmployees.sort((a,b) => {
-    //     if (a.name < b.name) {
-    //         return -1;
-    //     }
-    //     if (a.name > b.name) {
-    //         return 1;
-    //     }
-    //     return 0;
-    // });
-    return (
+    const [sortConfig, setSortConfig] = useState(null);
+    let sortedEmployees = [...employees];
+
+    if (sortConfig !== null) {
+        sortedEmployees.sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? -1:1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? 1:-1;;
+      }
+      return 0;
+    });
+  }
+  return (
       <table>
         <caption>Employees</caption>
         <thead>
@@ -42,7 +45,7 @@ function EmployeeDirectory() {
                 Image
             </th>
             <th>
-                <button type='button' onClick={() => setSortedField('name')}>
+                <button type='button' onClick={() => setSortConfig('name')}>
                     Name
                 </button>
             </th>
@@ -50,12 +53,12 @@ function EmployeeDirectory() {
                 D.O.B
             </th>
             <th>
-                <button type='button' onClick={() => setSortedField('phone')}>
+                <button type='button' onClick={() => setSortConfig('phone')}>
                     Phone
                 </button>
             </th>
             <th>
-                <button type='button' onClick={() => setSortedField('email')}>
+                <button type='button' onClick={() => setSortConfig('email')}>
                     Email
                 </button>
             </th>
@@ -154,4 +157,4 @@ function EmployeeDirectory() {
     // }
     // };
   });
-}
+
