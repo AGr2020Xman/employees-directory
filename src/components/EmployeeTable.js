@@ -2,45 +2,27 @@ import { useEffect, useState } from "react";
 import API from "../utils/employeeAPI";
 import { useSortableData } from "../utils/sortDataCustomHook";
 
-let employees = [];
-let filteredEmployees = [];
+// let employees = [];
+// let filteredEmployees = [];
 
 // .. the useEffect should [] --- docs for second argument - runs as if did mount/andDidUpdate with all cases.
 
 export const EmployeeTable = () => {
-  const [search, setSearch] = useState({
-    search: "",
-  });
+  const [employees, setEmployees] = useState([]);
 
-  const init = () => {
+  useEffect(() => populateData);
+
+  const populateData = () => {
     API.getEmployees()
       .then((res) => {
-        employees = res.data.results;
-        filteredEmployees = res.data.results;
+        setEmployees(res.data.results);
+        setFilteredEmployees(res.data.results);
       })
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    if (employees.length === 0) {
-      init();
-    } else {
-      handleFilterEmployees();
-    }
-  });
-
-  const handleFilterEmployees = () => {
-    // do not filter if there are no employees
-    if (employees.length !== 0) {
-      const searchTerm = search.search.toLowerCase();
-      filteredEmployees = employees[0].filter((emp) => {
-        emp.name.first.toLowerCase().include(searchTerm) ||
-          emp.name.last.toLowerCase().include(searchTerm) ||
-          emp.email.toLowerCase().include(searchTerm);
-        RenderTable(filteredEmployees);
-      });
-    }
-  };
+  //  nest returns - has its own state -
+  //
 
   const RenderTable = (props) => {
     const { employees, requestSort, sortConfig } = useSortableData(
