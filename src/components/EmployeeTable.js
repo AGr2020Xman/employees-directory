@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import API from "../utils/employeeAPI";
-import { useSortableData } from "../utils/sortDataCustomHook";
 
 // let employees = [];
 // let filteredEmployees = [];
@@ -10,8 +9,10 @@ import { useSortableData } from "../utils/sortDataCustomHook";
 export const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
   const [filteredEmployees, setFilteredEmployees] = useState(employees);
+  const [sortEmployees, setSortEmployees] = useState("name");
 
-  useEffect(() => populateData(), []);
+  // useEffect(() => populateData());
+
   const populateData = () => {
     API.getEmployees()
       .then((res) => {
@@ -21,20 +22,23 @@ export const EmployeeTable = () => {
       .catch((err) => console.log(err));
   };
   //  nest returns - has its own state -
-  const sortEmployees = (emp) => {
-    const emps = {
-      name: "name",
-      email: "email",
-      phone: "phone",
-      dob: "dob",
-    };
-    const sortProperties = emps[emp];
-    const sorted = employees.sort((a, b) => {
-      return b[sortProperties] - a[sortProperties];
-    });
-    setEmployees(sorted);
-  };
 
+  useEffect(() => {
+    const employeeSorting = (emp) => {
+      const emps = {
+        name: "name",
+        email: "email",
+        phone: "phone",
+        dob: "dob",
+      };
+      const sortProperties = emps[emp];
+      const sorted = [...employees].sort((a, b) => {
+        return b[sortProperties] - a[sortProperties];
+      });
+      setEmployees(sorted);
+    };
+    employeeSorting(sortEmployees);
+  }, [sortEmployees]);
   // const RenderTable = (props) => {
 
   return (
@@ -45,8 +49,8 @@ export const EmployeeTable = () => {
           <th>
             <button
               type="button"
-              onClick={() => sortEmployees("name")}
-              className={getClassNamesFor("name")}
+              onClick={(e) => setSortEmployees(e.target.value)}
+              // className={getClassNamesFor("name")}
             >
               Name
             </button>
@@ -54,8 +58,8 @@ export const EmployeeTable = () => {
           <th>
             <button
               type="button"
-              onClick={() => sortEmployees("phone")}
-              className={getClassNamesFor("phone")}
+              onClick={(e) => setSortEmployees(e.target.value)}
+              // className={getClassNamesFor("phone")}
             >
               Phone
             </button>
@@ -63,8 +67,8 @@ export const EmployeeTable = () => {
           <th>
             <button
               type="button"
-              onClick={() => sortEmployees("email")}
-              className={getClassNamesFor("email")}
+              onClick={(e) => setSortEmployees(e.target.value)}
+              // className={getClassNamesFor("email")}
             >
               Email
             </button>
