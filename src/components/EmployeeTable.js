@@ -9,75 +9,78 @@ import { useSortableData } from "../utils/sortDataCustomHook";
 
 export const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
+  const [filteredEmployees, setFilteredEmployees] = useState(employees);
 
-  useEffect(() => populateData);
-
+  useEffect(() => populateData(), []);
   const populateData = () => {
     API.getEmployees()
       .then((res) => {
-        setEmployees(res.data.results);
-        setFilteredEmployees(res.data.results);
+        setEmployees([res.data.results]);
+        setFilteredEmployees(employees);
       })
       .catch((err) => console.log(err));
   };
-
   //  nest returns - has its own state -
-  //
-
-  const RenderTable = (props) => {
-    const { employees, requestSort, sortConfig } = useSortableData(
-      props.employees
-    );
-    const getClassNamesFor = (name) => {
-      if (!sortConfig) {
-        return;
-      }
-      return sortConfig.key === name ? sortConfig.direction : undefined;
+  const sortEmployees = (emp) => {
+    const emps = {
+      name: "name",
+      email: "email",
+      phone: "phone",
+      dob: "dob",
     };
-    return (
-      <table>
-        <caption>Employees</caption>
-        <thead>
-          <tr>
-            <th>
-              <button
-                type="button"
-                onClick={() => requestSort("name")}
-                className={getClassNamesFor("name")}
-              >
-                Name
-              </button>
-            </th>
-            <th>
-              <button
-                type="button"
-                onClick={() => requestSort("phone")}
-                className={getClassNamesFor("phone")}
-              >
-                Phone
-              </button>
-            </th>
-            <th>
-              <button
-                type="button"
-                onClick={() => requestSort("email")}
-                className={getClassNamesFor("email")}
-              >
-                Email
-              </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map((employee) => (
-            <tr key={employee.id.value}>
-              <td>{employee.name}</td>
-              <td>{employee.phone}</td>
-              <td>{employee.email}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
+    const sortProperties = emps[emp];
+    const sorted = employees.sort((a, b) => {
+      return b[sortProperties] - a[sortProperties];
+    });
+    setEmployees(sorted);
   };
+
+  // const RenderTable = (props) => {
+
+  return (
+    <table>
+      <caption>Employees</caption>
+      <thead>
+        <tr>
+          <th>
+            <button
+              type="button"
+              onClick={() => sortEmployees("name")}
+              className={getClassNamesFor("name")}
+            >
+              Name
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              onClick={() => sortEmployees("phone")}
+              className={getClassNamesFor("phone")}
+            >
+              Phone
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              onClick={() => sortEmployees("email")}
+              className={getClassNamesFor("email")}
+            >
+              Email
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {employees.map((employee) => (
+          <tr key={employee.id}>
+            <td>{employee.name}</td>
+            <td>{employee.phone}</td>
+            <td>{employee.email}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+  // };
 };
