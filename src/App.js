@@ -1,12 +1,13 @@
-import logo from "./logo.svg";
-import Header from "./components/Header";
+import { Header } from "./components/Header";
 import { EmployeeTable } from "./components/EmployeeTable";
 import "./App.css";
+import { SearchBar } from "./components/SearchBar";
 
 function App() {
   return (
     <div className="container">
       <Header />
+      <SearchBar />
       <EmployeeTable />
     </div>
   );
