@@ -6,7 +6,7 @@ import API from './utils/employeeAPI'
 const meta = [
   {
     key: "id",
-    test: "ID",
+    text: "ID",
     sort: true,
   },
   {
@@ -31,8 +31,8 @@ const meta = [
   },
 ];
 
-function normalizeData(data) {
-  return data.map((td) => {
+function normalizeData(employees) {
+  return employees.map((td) => {
     const keys = Object.keys(td);
     return keys.map((key) => ({ key, text: td[key] }));
   });
@@ -60,7 +60,7 @@ export const App = () => {
 
   useEffect(() => {
     const populateData = async () => {
-      await API.getEmployees()
+      API.getEmployees()
         .then((res) => {
           setEmployees(res.data.results);
           employees.map((data, id) => {
@@ -71,7 +71,7 @@ export const App = () => {
         .catch((err) => console.log(err));
     };
     populateData();
-  }, [employees]);
+  }, []);
 
   useEffect(() => {
     function sortFunc(m) {
@@ -109,8 +109,10 @@ export const App = () => {
 
   return (
     <table className="container">    
+        {/* <caption>Employee Directory</caption> */}
+      
       <TableHeader headers={headerMeta} />
-      <TableData data={employees} meta={meta} />
+      {/* <TableData data={employees} meta={meta} /> */}
     </table>
   );
 };
