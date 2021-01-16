@@ -108,10 +108,10 @@ export const App = () => {
   }, [sortEmployees]);
 
   return (
-    <div className="container">
+    <table className="container">    
       <TableHeader headers={headerMeta} />
       <TableData data={employees} meta={meta} />
-    </div>
+    </table>
   );
 };
 

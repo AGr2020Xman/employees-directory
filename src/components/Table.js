@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import TableHeader from "./TableHeader";
 import TableData from "./TableData";
 
-export const Table = ({ normalizeData }) => {
-  const [headerMeta, setHeaderMeta] = useState(meta);
-  const [tableData, setTableData] = useState([]);
+export const Table = ({ normalizeData,  }) => {
 
   useEffect(() => {
     // normalize data
-    setTableData(normalizeData(data), meta);
+    setEmployees(normalizeData(employees), meta);
   }, []);
 
   return (
