@@ -13,6 +13,7 @@ const SearchForm = ({ employees }) => {
           emp.name.first.toLowerCase().include(searchTerm) ||
             emp.name.last.toLowerCase().include(searchTerm) ||
             emp.email.toLowerCase().include(searchTerm);
+          return filteredEmployees;
         })
       );
     }

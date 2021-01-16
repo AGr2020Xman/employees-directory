@@ -110,5 +110,3 @@ export const TableData = () => {
     </div>
   );
 };
-
-export default App;

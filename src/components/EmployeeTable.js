@@ -11,34 +11,36 @@ export const EmployeeTable = () => {
   const [filteredEmployees, setFilteredEmployees] = useState(employees);
   const [sortEmployees, setSortEmployees] = useState("name");
 
-  // useEffect(() => populateData());
-
   const populateData = () => {
     API.getEmployees()
       .then((res) => {
-        setEmployees([res.data.results]);
+        setEmployees(res.data.results);
         setFilteredEmployees(employees);
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => populateData(), []);
+
   //  nest returns - has its own state -
 
-  useEffect(() => {
-    const employeeSorting = (emp) => {
-      const emps = {
-        name: "name",
-        email: "email",
-        phone: "phone",
-        dob: "dob",
-      };
-      const sortProperties = emps[emp];
-      const sorted = [...employees].sort((a, b) => {
-        return b[sortProperties] - a[sortProperties];
-      });
-      setEmployees(sorted);
-    };
-    employeeSorting(sortEmployees);
-  }, [sortEmployees]);
+  // useEffect(() => {
+  //   const employeeSorting = (emp) => {
+  //     const emps = {
+  //       name: "name.last",
+  //       email: "email",
+  //       phone: "phone",
+  //       dob: "dob",
+  //     };
+  //     const sortProperties = emps[emp];
+  //     const sorted = [...employees].sort((a, b) => {
+  //       return b[sortProperties] - a[sortProperties];
+  //     });
+  //     setEmployees(sorted);
+  //   };
+  //   employeeSorting(sortEmployees);
+  // }, [sortEmployees]);
+
   // const RenderTable = (props) => {
 
   return (
@@ -76,15 +78,36 @@ export const EmployeeTable = () => {
         </tr>
       </thead>
       <tbody>
-        {employees.map((employee) => (
-          <tr key={employee.id}>
-            <td>{employee.name}</td>
-            <td>{employee.phone}</td>
-            <td>{employee.email}</td>
-          </tr>
-        ))}
+        {employees.length > 0 &&
+          employees.map((employee) => (
+            <tr>
+              <td>
+                {employee.name.first} {employee.name.last}
+              </td>
+              <td>{employee.phone}</td>
+              <td>{employee.email}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
   // };
 };
+
+<tbody className="tbody-dark">
+      {employees.length > 0 &&
+        employees.map((employee) => (
+          <tr>
+            <td className="datafield">
+              <img alt="profile" src={employee.picture.medium} />
+            </td>
+            <td className="datafield">
+              {employee.name.first} {employee.name.last}
+            </td>
+            <td className="datafield wide">{employee.email}</td>
+            <td className="datafield">{employee.phone}</td>
+            <td className="datafield">{formatDate(employee.dob.date)}</td>
+          </tr>
+        ))}
+    </tbody>
+  );
