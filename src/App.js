@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import TableHeader from "./TableHeader";
-import API from "../utils/employeeAPI";
+import TableHeader from "./components/TableHeader";
+import TableData from "./components/TableData";
+import API from './utils/employeeAPI'
 
 const meta = [
   {
@@ -49,25 +50,28 @@ function formatDate(birthdate) {
   );
 }
 
-export const TableData = () => {
+export const App = () => {
   const [headerMeta, setHeaderMeta] = useState(meta);
   const [employees, setEmployees] = useState([]);
   const [sortEmployees, setSortEmployees] = useState({ key: null, order: ">" });
   const [filteredEmployees, setFilteredEmployees] = useState(employees);
 
-  const populateData = () => {
-    API.getEmployees()
-      .then((res) => {
-        setEmployees(res.data.results);
-        employees.map((data, id) => {
-          return { ...data, id };
-        });
-        setFilteredEmployees(employees);
-      })
-      .catch((err) => console.log(err));
-  };
+  
 
-  useEffect(() => populateData(), []);
+  useEffect(() => {
+    const populateData = async () => {
+      await API.getEmployees()
+        .then((res) => {
+          setEmployees(res.data.results);
+          employees.map((data, id) => {
+            return setEmployees({ ...data, id });
+          });
+          setFilteredEmployees(employees);
+        })
+        .catch((err) => console.log(err));
+    };
+    populateData();
+  }, [employees]);
 
   useEffect(() => {
     function sortFunc(m) {
@@ -86,14 +90,14 @@ export const TableData = () => {
 
   useEffect(() => {
     // normalize data
-    setEmployees(normalizeData(data), meta);
+    setEmployees(normalizeData(employees), meta);
   }, []);
 
   useEffect(() => {
     // sort
     setEmployees(
       normalizeData(
-        data.sort((d1, d2) =>
+        employees.sort((d1, d2) =>
           compare[sortEmployees.order](
             d1[sortEmployees.key],
             d2[sortEmployees.key]

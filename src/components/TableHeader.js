@@ -1,7 +1,7 @@
 import React from "react";
 import TableCell from "./TableCell";
 
-export const TableHeader = ({ headers }) => {
+export default function TableHeader({ headers }) {
   return (
     <th className="table-row">
       {headers.map((d) => (
