@@ -46,8 +46,8 @@ const compare = {
 export const App = () => {
   const [headerMeta, setHeaderMeta] = useState(meta);
   const [employees, setEmployees] = useState([]);
-  const [sortEmployees, setSortEmployees] = useState({ key: null, order: ">" });
-  const [filteredEmployees, setFilteredEmployees] = useState(employees);
+  const [sorted, setSorted] = useState(false);
+  // const [filteredEmployees, setFilteredEmployees] = useState(employees);
 
   
 
@@ -59,51 +59,59 @@ export const App = () => {
           employees.map((data, id) => {
             return setEmployees({ ...data, id });
           });
-          setFilteredEmployees(employees);
+          // setFilteredEmployees(employees);
         })
         .catch((err) => console.log(err));
     };
     populateData();
   }, []);
 
-  useEffect(() => {
-    function sortFunc(m) {
-      setSortEmployees({
-        key: m.key,
-        order: sortEmployees.order === ">" ? "<" : ">",
-      });
-    }
+  // useEffect(() => {
+  //   function sortFunc(m) {
+  //     setSortEmployees({
+  //       key: m.key,
+  //       order: sortEmployees.order === ">" ? "<" : ">",
+  //     });
+  //   }
 
-    setHeaderMeta((currentHeaderMeta) =>
-      currentHeaderMeta.map((m) =>
-        m.sort ? { ...m, sortFunc: () => sortFunc(m) } : m
-      )
-    );
-  }, [sortEmployees]);
+  //   setHeaderMeta((currentHeaderMeta) =>
+  //     currentHeaderMeta.map((m) =>
+  //       m.sort ? { ...m, sortFunc: () => sortFunc(m) } : m
+  //     )
+  //   );
+  // }, [sortEmployees]);
 
-  useEffect(() => {
-    // normalize data
-    setEmployees(normalizeData(employees), meta);
-  }, []);
+  // useEffect(() => {
+  //   // normalize data
+  //   setEmployees(normalizeData(employees), meta);
+  // }, []);
 
-  useEffect(() => {
-    // sort
-    setEmployees(
-      normalizeData(
-        employees.sort((d1, d2) =>
-          compare[sortEmployees.order](
-            d1[sortEmployees.key],
-            d2[sortEmployees.key]
-          )
-        )
-      )
-    );
-  }, [sortEmployees]);
+  // useEffect(() => {
+  //   // sort
+  //   setEmployees(
+  //     normalizeData(
+  //       employees.sort((d1, d2) =>
+  //         compare[sortEmployees.order](
+  //           d1[sortEmployees.key],
+  //           d2[sortEmployees.key]
+  //         )
+  //       )
+  //     )
+  //   );
+  // }, [sortEmployees]);
+
+  // const handleSort = () => {
+  //   if (!sorted) {
+  //     setEmployees
+  //   }
+  // }
+let searchTerm = 'fill'
+  // const filteredEmployees = employees.filter(employee => employee.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
 
   return (
     <table className="container">    
         {/* <caption>Employee Directory</caption> */}
-      
+      {/* <Search /> */}
       <TableHeader headers={headerMeta} />
       <TableData data={employees} meta={meta} />
     </table>
