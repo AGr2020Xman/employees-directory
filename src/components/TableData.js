@@ -19,15 +19,24 @@ export default function TableData({ data, meta }) {
   })
   console.log(extractedData);
 
+  
   // console.log('header order', headerOrder);
   return (
-    <tr>
-      <tbody>
+    <tbody>
+        {extractedData.map((employee) => {
+          return (
+        <tr className='data-row' key={employee.email}>
         <td>
-          
+          <img alt='picture profile' src={employee.picture}/>
         </td>
+          <td>{employee.name}</td>
+          <td>{employee.phone}</td>
+          <td>{employee.email}</td>
+          <td>{employee.dob}</td>
+  </tr>
+    )
+  })}
       </tbody>
-    </tr>
   //   <tbody>{data.map(({name, phone, email}) => {
   //     return (
   //       <tr>
