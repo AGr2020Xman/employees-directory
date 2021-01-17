@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 
-const SearchForm = ({ employees }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredEmployees, setFilteredEmployees] = useState([]);
+const Search = ({ onSearch, searchTerm }) => {
 
-  const filterEmployees = (e) => {
-    // do not filter if there are no employees
-    if (employees.length !== 0) {
-      setSearchTerm(e.target.value.toLowerCase());
-      setFilteredEmployees(
-        employees[0].filter((emp) => {
-          emp.name.first.toLowerCase().include(searchTerm) ||
-            emp.name.last.toLowerCase().include(searchTerm) ||
-            emp.email.toLowerCase().include(searchTerm);
-          return filteredEmployees;
-        })
-      );
-    }
-  };
+  // const filterEmployees = (e) => {
+  //   // do not filter if there are no employees
+  //   if (employees.length !== 0) {
+  //     setSearchTerm(e.target.value.toLowerCase());
+  //     setFilteredEmployees(
+  //       employees[0].filter((emp) => {
+  //         emp.name.first.toLowerCase().include(searchTerm) ||
+  //           emp.name.last.toLowerCase().include(searchTerm) ||
+  //           emp.email.toLowerCase().include(searchTerm);
+  //         return filteredEmployees;
+  //       })
+  //     );
+  //   }
+  // };
 
   //   useEffect(() => {
   //     if (employees.length === 0) {
@@ -34,7 +32,7 @@ const SearchForm = ({ employees }) => {
             value={searchTerm}
             type="text"
             className="form-control"
-            onChange={filterEmployees}
+            onChange={onSearch}
             placeholder="Search"
           />
         </div>
@@ -67,4 +65,4 @@ const SearchForm = ({ employees }) => {
 //         </div>)
 
 //     }
-export default SearchForm;
+export default Search;

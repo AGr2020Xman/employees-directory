@@ -1,33 +1,21 @@
 import React from "react";
-import dateFormat from 'dateformat';
 
 export default function TableData({ data, meta }) {
   const headerOrder = meta.map(m => m.key);
   console.log(headerOrder);
   console.log('dataaaa',data);
 
-  let extractedData = data.map((person) => {
-    let { name, email, dob, phone, picture } = person
-    return ({
-      picture: picture.medium,
-      name: name.first + ' ' + name.last,
-      email: email,
-      phone: phone,
-      // dob: dateFormat(dob, "dd/mm/yyyy")
-      dob: dateFormat(dob.date, "dd/mm/yyyy")
-    })
-  })
-  console.log(extractedData);
+ 
 
   
   // console.log('header order', headerOrder);
   return (
     <tbody>
-        {extractedData.map((employee) => {
+        {data.map((employee) => {
           return (
         <tr className='data-row' key={employee.email}>
         <td>
-          <img alt='picture profile' src={employee.picture}/>
+          <img alt='profile' src={employee.picture}/>
         </td>
           <td>{employee.name}</td>
           <td>{employee.phone}</td>

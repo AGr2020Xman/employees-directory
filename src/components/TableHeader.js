@@ -1,53 +1,38 @@
 import React from "react";
 import TableCell from "./TableCell";
 
-export default function TableHeader({ headers }) {
-  // console.log(headers);
-  // console.log('new array',headers.map((d)=>{
-  //   return (
-  //     d.text
-  //   )
-  // }));
+export default function TableHeader({ headers, handleSortByName, handleSortByDob, handleSortByEmail }) {
   return (
-//     <th className="table-row">
-//       {headers.map((d) => {
-//         return (
-//           <td>
-//             {d}
-//           </td>
-//         )
-//       })}
-//     </th>
-//   );
-// };
-// {headers.map((d) => (
-  // <TableCell data={d} />
-// ))}
         <tr>
-
           {headers.map((heading) => {
-            return (
-              <th>
+            switch(heading.text) {
+              case 'Name':
+                return (
+                  <th onClick={handleSortByName}>
                 {heading.text}
               </th>
-            )
+                );
+                
+                case 'Email':
+                return (
+                  <th onClick={handleSortByEmail}>
+                {heading.text}
+              </th>
+                );
+                case 'D.O.B':
+                return (
+                  <th onClick={handleSortByDob}>
+                {heading.text}
+              </th>
+                );
+                default:
+                  console.log('cheese',heading.text);
+                  return (
+                    <th>
+                      {heading.text}
+                    </th>
+                  )
+            }
           })}
-        {/* <td>
-            Image here
-          </td>
-          <td>
-            Name here
-          </td>
-          <td>
-            Phone here
-          </td>
-          <td>
-            Email here
-          </td>
-          <td>
-            DOB here
-          </td> */}
-  
         </tr>
   )}
-       

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Header = () => {
+export default function Header() {
   return (
     <header className="header text-center">
       <h2>Employee Directory</h2>

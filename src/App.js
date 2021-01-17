@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import TableHeader from "./components/TableHeader";
 import TableData from "./components/TableData";
 import API from './utils/employeeAPI'
-
+import dateFormat from 'dateformat';
+import Search from './components/Search';
 const meta = [
   {
     key: "id",
@@ -47,6 +48,7 @@ export const App = () => {
   const [headerMeta, setHeaderMeta] = useState(meta);
   const [employees, setEmployees] = useState([]);
   const [sorted, setSorted] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   // const [filteredEmployees, setFilteredEmployees] = useState(employees);
 
   
@@ -66,6 +68,17 @@ export const App = () => {
     populateData();
   }, []);
 
+  let formatEmployeeData = employees.map((person) => {
+    let { name, email, dob, phone, picture } = person
+    return ({
+      picture: picture.medium,
+      name: name.first + ' ' + name.last,
+      email: email,
+      phone: phone,
+      // dob: dateFormat(dob, "dd/mm/yyyy")
+      dob: dateFormat(dob.date, "dd/mm/yyyy")
+    })
+  })
   // useEffect(() => {
   //   function sortFunc(m) {
   //     setSortEmployees({
@@ -105,15 +118,24 @@ export const App = () => {
   //     setEmployees
   //   }
   // }
-let searchTerm = 'fill'
-  // const filteredEmployees = employees.filter(employee => employee.name.toLowerCase().startsWith(searchTerm.toLowerCase()));
+
+  const handleSearchTerm = (event) => {
+    setSearchTerm(event.target.value)
+  }
+  const filteredEmployees = formatEmployeeData.filter(employee => {
+    return (
+    employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  });
 
   return (
     <table className="container">    
         {/* <caption>Employee Directory</caption> */}
-      {/* <Search /> */}
+      <Search onSearch={handleSearchTerm} searchTerm={searchTerm}/>
       <TableHeader headers={headerMeta} />
-      <TableData data={employees} meta={meta} />
+      <TableData data={filteredEmployees} meta={meta} />
     </table>
   );
 };
