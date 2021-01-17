@@ -43,13 +43,6 @@ const compare = {
   "<": (d1, d2) => d1 < d2,
 };
 
-function formatDate(birthdate) {
-  const date = new Date(birthdate);
-  return (
-    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-  );
-}
-
 export const App = () => {
   const [headerMeta, setHeaderMeta] = useState(meta);
   const [employees, setEmployees] = useState([]);
@@ -112,7 +105,7 @@ export const App = () => {
         {/* <caption>Employee Directory</caption> */}
       
       <TableHeader headers={headerMeta} />
-      {/* <TableData data={employees} meta={meta} /> */}
+      <TableData data={employees} meta={meta} />
     </table>
   );
 };

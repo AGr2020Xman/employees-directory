@@ -23,13 +23,13 @@ export default function TableHeader({ headers }) {
 // {headers.map((d) => (
   // <TableCell data={d} />
 // ))}
-<th>
         <tr>
+
           {headers.map((heading) => {
             return (
-              <td>
+              <th>
                 {heading.text}
-              </td>
+              </th>
             )
           })}
         {/* <td>
@@ -47,7 +47,7 @@ export default function TableHeader({ headers }) {
           <td>
             DOB here
           </td> */}
+  
         </tr>
-  </th>
   )}
        
