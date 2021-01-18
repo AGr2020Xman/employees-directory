@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function TableHeader({ headers, handleSortByName, handleSortByEmail }) {
+export default function TableHeader({ headers, handleSortByName, handleSortByDob, handleSortByEmail }) {
   return (
         <tr>
           {headers.map((heading) => {
@@ -15,6 +15,12 @@ export default function TableHeader({ headers, handleSortByName, handleSortByEma
                 case 'Email':
                 return (
                   <th onClick={handleSortByEmail}>
+                {heading.text}
+              </th>
+                );
+                case 'D.O.B':
+                return (
+                  <th onClick={handleSortByDob}>
                 {heading.text}
               </th>
                 );

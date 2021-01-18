@@ -40,7 +40,7 @@ export const App = () => {
   const [sorted, setSorted] = useState({
     Name: false,
     Email: null,
-    // DOB: null,
+    DOB: null,
   });
   const [searchTerm, setSearchTerm] = useState('');
   // const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -79,34 +79,40 @@ export const App = () => {
     // console.log('Sorting by name');
     if (!sorted.Name) {
         formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1);
-        setSorted({...sorted, Name: true, Email: null});
+        setSorted({Name: true, Email: null, DOB: null});
         console.log(sorted);
     } else {
       formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
-        setSorted({...sorted, Name: false, Email: null});
+        setSorted({Name: false, Email: null, DOB: null});
     }
 }
 
+
+const toComparableDate = (dateStr) => {
+  const [day, month, year] = dateStr.split("/")
+  return new Date(year, month - 1, day)
+}
+
 // requires further 
-// const handleSortByDob = ()  =>{
-//     // sort array ascending or descending by dob
-//     if (!sorted) {
-//       formatEmployeeData.sort((a, b) => (a.dob.getTime() > b.dob.getTime()) ? 1 : -1);
-//         setSorted({sorted, DOB: true});
-//     } else {
-//       formatEmployeeData.sort((a, b) => (a.dob.getTime() > b.dob.getTime()) ? -1 : 1);
-//         setSorted({sorted, DOB: false});
-//     }
-// }
+const handleSortByDob = ()  =>{
+    // sort array ascending or descending by dob
+    if (!sorted.DOB) {
+      formatEmployeeData.sort((a, b) => (toComparableDate(a.dob) > toComparableDate(b.dob)) ? 1 : -1);
+        setSorted({DOB: true, Name: null, Email: null});
+    } else {
+      formatEmployeeData.sort((a, b) => (toComparableDate(a.dob) > toComparableDate(b.dob)) ? -1 : 1);
+        setSorted({DOB: false, Name: null, Email: null});
+    }
+}
 
 const handleSortByEmail = () => {
   // sort array ascending or descending by email
   if (!sorted.Email) {
       formatEmployeeData.sort((a, b) => (a.email > b.email) ? 1 : -1);
-      setSorted({Email: true, Name: null});
+      setSorted({Email: true, Name: null, DOB: null});
   } else {
       formatEmployeeData.sort((a, b) => (a.email > b.email) ? -1 : 1);
-      setSorted({Email: false, Name: null});
+      setSorted({Email: false, Name: null, DOB: null});
   }
 }
 
@@ -115,14 +121,18 @@ const handleSortByEmail = () => {
   }
 
   const sortedEmployees = function() {
-  if (!sorted.Name && sorted.Email === null) {
+  if (!sorted.Name && sorted.Email === null  && sorted.DOB === null) {
     return formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1) 
-  } else if (sorted.Name && sorted.Email === null) { 
+  } else if (sorted.Name && sorted.Email === null && sorted.DOB === null) { 
     return formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
-  } else if (!sorted.Email && sorted.Name === null) {
+  } else if (!sorted.Email && sorted.Name === null && sorted.DOB === null) {
     return formatEmployeeData.sort((a, b) => (a.email > b.email) ? 1 : -1)
-  } else if (sorted.Email && sorted.Name === null) {
+  } else if (sorted.Email && sorted.Name === null && sorted.DOB === null) {
     return formatEmployeeData.sort((a, b) => (a.email > b.email) ? -1 : 1)
+  } else if (!sorted.DOB && sorted.Name === null && sorted.Email === null) {
+    return formatEmployeeData.sort((a, b) => (toComparableDate(a.dob) > toComparableDate(b.dob)) ? 1 : -1)
+  } else if (sorted.DOB && sorted.Name === null && sorted.Email === null) {
+    return formatEmployeeData.sort((a, b) => (toComparableDate(a.dob) > toComparableDate(b.dob)) ? -1 : 1)
   };
   }
 
@@ -145,7 +155,7 @@ const handleSortByEmail = () => {
       <Header />
       <Search onSearch={handleSearchTerm} searchTerm={searchTerm}/>
     <table className="container">    
-      <TableHeader headers={headerMeta} handleSortByName={handleSortByName} handleSortByEmail={handleSortByEmail}/>
+      <TableHeader headers={headerMeta} handleSortByName={handleSortByName} handleSortByEmail={handleSortByEmail} handleSortByDob={handleSortByDob}/>
       <TableData data={filteredEmployees} meta={meta} />
     </table>
     </div>
