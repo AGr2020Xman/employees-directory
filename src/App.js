@@ -4,6 +4,8 @@ import TableData from "./components/TableData";
 import API from './utils/employeeAPI'
 import dateFormat from 'dateformat';
 import Search from './components/Search';
+import Header from './components/Header';
+
 const meta = [
   {
     key: "id",
@@ -32,22 +34,14 @@ const meta = [
   },
 ];
 
-function normalizeData(employees) {
-  return employees.map((td) => {
-    const keys = Object.keys(td);
-    return keys.map((key) => ({ key, text: td[key] }));
-  });
-}
-
-const compare = {
-  ">": (d1, d2) => d1 > d2,
-  "<": (d1, d2) => d1 < d2,
-};
-
 export const App = () => {
   const [headerMeta, setHeaderMeta] = useState(meta);
   const [employees, setEmployees] = useState([]);
-  const [sorted, setSorted] = useState(false);
+  const [sorted, setSorted] = useState({
+    Name: false,
+    Email: null,
+    // DOB: null,
+  });
   const [searchTerm, setSearchTerm] = useState('');
   // const [filteredEmployees, setFilteredEmployees] = useState(employees);
 
@@ -79,50 +73,63 @@ export const App = () => {
       dob: dateFormat(dob.date, "dd/mm/yyyy")
     })
   })
-  // useEffect(() => {
-  //   function sortFunc(m) {
-  //     setSortEmployees({
-  //       key: m.key,
-  //       order: sortEmployees.order === ">" ? "<" : ">",
-  //     });
-  //   }
+  
+  const handleSortByName = () => {
+    // sort array ascending or descending by first name
+    // console.log('Sorting by name');
+    if (!sorted.Name) {
+        formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        setSorted({...sorted, Name: true, Email: null});
+        console.log(sorted);
+    } else {
+      formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
+        setSorted({...sorted, Name: false, Email: null});
+    }
+}
 
-  //   setHeaderMeta((currentHeaderMeta) =>
-  //     currentHeaderMeta.map((m) =>
-  //       m.sort ? { ...m, sortFunc: () => sortFunc(m) } : m
-  //     )
-  //   );
-  // }, [sortEmployees]);
+// requires further 
+// const handleSortByDob = ()  =>{
+//     // sort array ascending or descending by dob
+//     if (!sorted) {
+//       formatEmployeeData.sort((a, b) => (a.dob.getTime() > b.dob.getTime()) ? 1 : -1);
+//         setSorted({sorted, DOB: true});
+//     } else {
+//       formatEmployeeData.sort((a, b) => (a.dob.getTime() > b.dob.getTime()) ? -1 : 1);
+//         setSorted({sorted, DOB: false});
+//     }
+// }
 
-  // useEffect(() => {
-  //   // normalize data
-  //   setEmployees(normalizeData(employees), meta);
-  // }, []);
-
-  // useEffect(() => {
-  //   // sort
-  //   setEmployees(
-  //     normalizeData(
-  //       employees.sort((d1, d2) =>
-  //         compare[sortEmployees.order](
-  //           d1[sortEmployees.key],
-  //           d2[sortEmployees.key]
-  //         )
-  //       )
-  //     )
-  //   );
-  // }, [sortEmployees]);
-
-  // const handleSort = () => {
-  //   if (!sorted) {
-  //     setEmployees
-  //   }
-  // }
+const handleSortByEmail = () => {
+  // sort array ascending or descending by email
+  if (!sorted.Email) {
+      formatEmployeeData.sort((a, b) => (a.email > b.email) ? 1 : -1);
+      setSorted({Email: true, Name: null});
+  } else {
+      formatEmployeeData.sort((a, b) => (a.email > b.email) ? -1 : 1);
+      setSorted({Email: false, Name: null});
+  }
+}
 
   const handleSearchTerm = (event) => {
     setSearchTerm(event.target.value)
   }
-  const filteredEmployees = formatEmployeeData.filter(employee => {
+
+  const sortedEmployees = function() {
+  // if (!sorted.Name) {
+    // return formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1) 
+  // } else if (sorted.Name) { 
+    // return formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
+  if (!sorted.Email) {
+    return formatEmployeeData.sort((a, b) => (a.email > b.email) ? 1 : -1)
+  } else if (sorted.Email) {
+    return formatEmployeeData.sort((a, b) => (a.email > b.email) ? -1 : 1)
+  };
+  }
+
+  // const sortedEmployees = sorted.Name ? formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1) : formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
+  // const sortedEmployees = sorted.Email ? formatEmployeeData.sort((a, b) => (a.email > b.email) ? 1 : -1) : formatEmployeeData.sort((a, b) => (a.email > b.email) ? -1 : 1);
+  const filteredEmployees = sortedEmployees().filter(employee => {
+    // console.log(sorted);
     return (
     employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -130,13 +137,18 @@ export const App = () => {
     )
   });
 
+
+
   return (
-    <table className="container">    
-        {/* <caption>Employee Directory</caption> */}
+    <div className="container">
+    {/* <caption>Employee Directory</caption> */}
+      <Header />
       <Search onSearch={handleSearchTerm} searchTerm={searchTerm}/>
-      <TableHeader headers={headerMeta} />
+    <table className="container">    
+      <TableHeader headers={headerMeta} handleSortByName={handleSortByName} handleSortByEmail={handleSortByEmail}/>
       <TableData data={filteredEmployees} meta={meta} />
     </table>
+    </div>
   );
 };
 
