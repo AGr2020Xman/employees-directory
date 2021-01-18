@@ -76,11 +76,8 @@ export const App = () => {
     // sort array ascending or descending by first name
     // console.log('Sorting by name');
     if (!sorted.Name) {
-        formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1);
         setSorted({Name: true, Email: null, DOB: null, Phone: null});
-        console.log(sorted);
     } else {
-      formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
         setSorted({Name: false, Email: null, DOB: null, Phone: null});
     }
 }
@@ -95,11 +92,8 @@ const toComparableNumber = (numStr) => {
 const handleSortByPhone = () => {
   // sort array ascending or descending by phone
   if (!sorted.Phone) {
-      formatEmployeeData.sort((a, b) => (toComparableNumber(a.phone) > toComparableNumber(b.phone)) ? 1 : -1);
       setSorted({Phone: true, Email: null, DOB: null, Name: null});
-      console.log(sorted);
   } else {
-    formatEmployeeData.sort((a, b) => (toComparableNumber(a.phone) > toComparableNumber(b.phone)) ? -1 : 1);
       setSorted({Phone: false, Email: null, DOB: null, Name: null});
   }
 }
@@ -112,11 +106,8 @@ const toComparableDate = (dateStr) => {
 const handleSortByDob = ()  => {
     // sort array ascending or descending by dob
     if (!sorted.DOB) {
-      formatEmployeeData.sort((a, b) => (toComparableDate(a.dob) > toComparableDate(b.dob)) ? 1 : -1);
         setSorted({DOB: true, Name: null, Email: null, Phone: null});
-      console.log(sorted);
     } else {
-      formatEmployeeData.sort((a, b) => (toComparableDate(a.dob) > toComparableDate(b.dob)) ? -1 : 1);
         setSorted({DOB: false, Name: null, Email: null, Phone: null});
     }
 }
@@ -124,11 +115,8 @@ const handleSortByDob = ()  => {
 const handleSortByEmail = () => {
   // sort array ascending or descending by email
   if (!sorted.Email) {
-      formatEmployeeData.sort((a, b) => (a.email > b.email) ? 1 : -1);
       setSorted({Email: true, Name: null, DOB: null, Phone: null});
-      console.log(sorted);
   } else {
-      formatEmployeeData.sort((a, b) => (a.email > b.email) ? -1 : 1);
       setSorted({Email: false, Name: null, DOB: null, Phone: null});
   }
 }
