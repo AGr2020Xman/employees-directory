@@ -33,7 +33,7 @@ export default function TableHeader({ headers, handleSortByName, handleSortByDob
                 );
                 default:
                   return (
-                    <th>
+                    <th className="sortable-th">
                       {heading.text}
                     </th>
                   )

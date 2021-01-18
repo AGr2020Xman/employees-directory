@@ -1,3 +1,9 @@
 th {
     cursor: pointer;
 }
+
+.sortable-th {
+    background-color: lightgray;
+    border-top: solid 1px lightslategray;
+    border-bottom: solid 1px lightslategray;
+}

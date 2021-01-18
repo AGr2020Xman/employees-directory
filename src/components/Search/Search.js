@@ -12,7 +12,7 @@ const Search = ({ onSearch, searchTerm }) => {
             type="text"
             className="form-control"
             onChange={onSearch}
-            placeholder="Search"
+            placeholder="Search employees"
           />
         </div>
       </div>
