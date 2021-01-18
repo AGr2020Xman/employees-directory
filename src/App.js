@@ -115,13 +115,13 @@ const handleSortByEmail = () => {
   }
 
   const sortedEmployees = function() {
-  // if (!sorted.Name) {
-    // return formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1) 
-  // } else if (sorted.Name) { 
-    // return formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
-  if (!sorted.Email) {
+  if (!sorted.Name && sorted.Email === null) {
+    return formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1) 
+  } else if (sorted.Name && sorted.Email === null) { 
+    return formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
+  } else if (!sorted.Email && sorted.Name === null) {
     return formatEmployeeData.sort((a, b) => (a.email > b.email) ? 1 : -1)
-  } else if (sorted.Email) {
+  } else if (sorted.Email && sorted.Name === null) {
     return formatEmployeeData.sort((a, b) => (a.email > b.email) ? -1 : 1)
   };
   }
@@ -129,7 +129,7 @@ const handleSortByEmail = () => {
   // const sortedEmployees = sorted.Name ? formatEmployeeData.sort((a, b) => (a.name > b.name) ? 1 : -1) : formatEmployeeData.sort((a, b) => (a.name > b.name) ? -1 : 1);
   // const sortedEmployees = sorted.Email ? formatEmployeeData.sort((a, b) => (a.email > b.email) ? 1 : -1) : formatEmployeeData.sort((a, b) => (a.email > b.email) ? -1 : 1);
   const filteredEmployees = sortedEmployees().filter(employee => {
-    // console.log(sorted);
+    console.log(sorted);
     return (
     employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

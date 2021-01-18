@@ -1,7 +1,6 @@
 import React from "react";
-import TableCell from "./TableCell";
 
-export default function TableHeader({ headers, handleSortByName, handleSortByDob, handleSortByEmail }) {
+export default function TableHeader({ headers, handleSortByName, handleSortByEmail }) {
   return (
         <tr>
           {headers.map((heading) => {
@@ -19,14 +18,7 @@ export default function TableHeader({ headers, handleSortByName, handleSortByDob
                 {heading.text}
               </th>
                 );
-                case 'D.O.B':
-                return (
-                  <th onClick={handleSortByDob}>
-                {heading.text}
-              </th>
-                );
                 default:
-                  console.log('cheese',heading.text);
                   return (
                     <th>
                       {heading.text}
