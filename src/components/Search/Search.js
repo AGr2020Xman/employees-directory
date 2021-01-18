@@ -20,4 +20,4 @@ const Search = ({ onSearch, searchTerm }) => {
   );
 };
 
-export default Search;
+export default Search; 

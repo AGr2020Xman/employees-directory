@@ -18,5 +18,5 @@ export default function TableData({ data, meta }) {
   </tr>
     )
   })}
-      </tbody>
+      </tbody> 
   )};

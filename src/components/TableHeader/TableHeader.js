@@ -24,7 +24,7 @@ export default function TableHeader({ headers, handleSortByName, handleSortByDob
                   <th onClick={handleSortByDob} className="sortable-th">
                 {heading.text}<i className="fa fa-fw fa-sort"></i>
               </th>
-                );
+                ); 
                 case 'Phone':
                 return (
                   <th onClick={handleSortByPhone} className="sortable-th">

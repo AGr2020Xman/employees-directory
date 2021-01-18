@@ -12,7 +12,7 @@ const meta = [
     key: "id",
     text: "ID",
     sort: true,
-  },
+  }, 
   {
     key: "name",
     text: "Name",
