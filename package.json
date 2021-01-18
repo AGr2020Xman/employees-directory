@@ -2,7 +2,7 @@
   "name": "employee-directory",
   "version": "0.1.0",
   "private": true,
-  "h0mepage": "https://AGr2020Xman.github.io/employees-directory",
+  "homepage": "https://agr2020Xman.github.io/employees-directory",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",

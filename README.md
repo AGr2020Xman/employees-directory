@@ -36,7 +36,7 @@ To install Employee Directory:
 2. Run npm start
 3. A web browser window should open automatically - if it doesn't, you can open a web browser and navigate to https://localhost:3000.
 
-Alternatively, you can use this app at the deployed location [here](https://AGr2020Xman.github.io/employees-directory).
+Alternatively, you can use this app at the deployed location [here](https://agr2020Xman.github.io/employees-directory).
 
 ## User Story
 
@@ -49,7 +49,7 @@ Alternatively, you can use this app at the deployed location [here](https://AGr2
 
 ## Demonstration
 
-- [Deployed Application](https://AGr2020Xman.github.io/employees-directory)
+- [Deployed Application](https://agr2020Xman.github.io/employees-directory)
 
 ## Tests
 
