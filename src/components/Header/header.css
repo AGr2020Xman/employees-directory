@@ -1,0 +1,13 @@
+.header {
+    height: 150px;
+    background-position: center;
+    position: relative;
+    background-size: cover;
+    background-color: rgb(16, 30, 70);
+    color: white;
+    border-bottom: 5px solid red;    
+  }
+
+  .header h2 {
+      padding-top: 22px;
+  }
