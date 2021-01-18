@@ -59,11 +59,11 @@ Alternatively, you can use this app at the deployed location [here](https://AGr2
 
 _The application before manipulation - initial load_
 
-![](./images/default-load.JPG)
+![](./src/images/default-load.JPG)
 
 _Adding filter options through the search bar_
 
-![](./images/filter-search.JPG)
+![](./src/images/filter-search.JPG)
 
 ## Questions
 
